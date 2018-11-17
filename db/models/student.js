@@ -31,17 +31,4 @@ Student.beforeCreate(student => {                          // Options isn't need
   student.lastName = lastName[0].toUpperCase() + lastName.slice(1);
 })
 
-// get ‘/’
-// get ‘/:id’
-// post ‘/’
-// put ‘/:id’
-// delete ‘/:id’
-
-// get ‘/’
-// get ‘/:id’
-// post ‘/student/:studentId’
-// delete ‘/:id’
-
-
-
 module.exports = Student;                           // Exporting

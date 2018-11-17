@@ -12,7 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
 
-app.use('/students', students);
+app.use('/students', students);                           // Client requests /students
+                                                              // -> server
+                                                                // -> const students = require('./routes/students');
+                                                                  // -> Client gets access to Students, which contains routes
 app.use('/tests', tests);
 
 app.use((err, req, res, next) => {
