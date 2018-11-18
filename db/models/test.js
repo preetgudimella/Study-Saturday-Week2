@@ -20,6 +20,7 @@ const Test = db.define('test', {
   },
 });
 
-Test.belongsTo(Student, { as: 'student' });
+Test.belongsTo(Student, { as: 'student' });     // renames the column for the foreign id from Student, which is on Test
+// Student.hasMany(Test)                        // redundant
 
 module.exports = Test;

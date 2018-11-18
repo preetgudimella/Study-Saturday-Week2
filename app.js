@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -15,6 +16,7 @@ app.use(morgan('dev'));
 app.use('/students', students);
 app.use('/tests', tests);
 
+// this is the error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
