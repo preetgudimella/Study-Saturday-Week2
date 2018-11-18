@@ -5,6 +5,24 @@ const Student = require('../db/models/student')
 
 
 
+/*
+
+
+get ‘/’
+get ‘/:id’
+post ‘/student/:studentId’
+delete ‘/:id’
+
+get, delete, post, put
+    - req.params.X
+post, put
+    - req.body
+
+*/
+
+
+
+// https://sequelizedocs.fullstackacademy.com/querying/
 router.get('/', async (req, res, next) => {
   try {
     const findAllTests = await Test.findAll();
@@ -15,6 +33,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+
+
+// https://sequelizedocs.fullstackacademy.com/querying/
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
@@ -28,6 +49,9 @@ router.get('/:id', async (req, res, next) => {
 
 
 
+// https://sequelizedocs.fullstackacademy.com/querying/
+// https://sequelizedocs.fullstackacademy.com/inserting-updating-destroying/
+// 
 router.post('/student/:studentId', async (req, res, next) => {
   const studentId = req.params.studentId;
   const body = req.body;
@@ -44,6 +68,8 @@ router.post('/student/:studentId', async (req, res, next) => {
 
 
 
+// https://sequelizedocs.fullstackacademy.com/querying/
+// https://sequelizedocs.fullstackacademy.com/inserting-updating-destroying/
 router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {

@@ -2,23 +2,27 @@
 const router = require('express').Router();
 const Student = require('../db/models/student')
 
-// get ‘/’
-// get ‘/:id’
-// post ‘/’
-// put ‘/:id’
-// delete ‘/:id’
 
-// get ‘/’
-// get ‘/:id’
-// post ‘/student/:studentId’
-// delete ‘/:id’
+/*
 
+get ‘/’
+get ‘/:id’
+post ‘/’
+put ‘/:id’
+delete ‘/:id’
+
+get, delete, post, put
+    - req.params.X
+post, put
+    - req.body
+
+*/
 
 
 // https://sequelizedocs.fullstackacademy.com/querying/
-router.get('/', async (req, res, next) => {               // ??? router.get since enabling routing via: const router = require('express').Router();
+router.get('/', async (req, res, next) => {                   // ??? router.get since enabling routing via: const router = require('express').Router();
   try {
-    const findAllStudents = await Student.findAll();          // will find ALL the pugs!
+    const findAllStudents = await Student.findAll();          // Finds ALL the pugs
     res.status(200).json(findAllStudents);
   } catch (err) {
     console.log(err);
@@ -28,17 +32,18 @@ router.get('/', async (req, res, next) => {               // ??? router.get sinc
 
 
 
+// https://sequelizedocs.fullstackacademy.com/querying/
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const findOneStudent = await Student.findById(id);
     if (!findOneStudent) {
-      res.status(404).json();                             // this is the status that the client gets
+      res.status(404).json();                             // The status that the client gets
     } else {
-      res.status(200).json(findOneStudent);
+      res.status(200).json(findOneStudent);               // The status that the client gets
     }
   } catch (err) {
-    console.log(err);                                     // this is the status that the developer gets
+    console.log(err);                                     // The status that the developer gets
     next(err)
   }
 })
@@ -59,6 +64,8 @@ router.post('/', async (req, res, next) => {
 
 
 
+// https://sequelizedocs.fullstackacademy.com/querying/
+// https://sequelizedocs.fullstackacademy.com/inserting-updating-destroying/
 router.put('/:id', async (req, res, next) => {
   const id = req.params.id;
   const body = req.body;
@@ -74,12 +81,14 @@ router.put('/:id', async (req, res, next) => {
 
 
 
+// https://sequelizedocs.fullstackacademy.com/querying/
+// https://sequelizedocs.fullstackacademy.com/inserting-updating-destroying/
 router.delete('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const findOneStudent = await Student.findById(id);
-    const deleteStudent = await findOneStudent.destroy()
-    res.status(204).json(deleteStudent);
+    const deletedStudent = await findOneStudent.destroy()
+    res.status(204).json(deletedStudent);
   } catch (err) {
     console.log(err);
     next(err);
