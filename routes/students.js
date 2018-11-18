@@ -1,76 +1,3 @@
-const router = require('express').Router();
-const Student = require('../db/models/student');
-
-router.get('/', async (req, res, next) => {
-  try {
-    const students = await Student.findAll();
-    res.send(students);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    let student = await Student.findById(req.params.id);
-    if (student) {
-      res.send(student);
-    } else {
-      res.status(404).send('Student not found');
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/', async (req, res, next) => {
-  try {
-    let student = await Student.create(req.body);
-    res.status(201).send(student);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.put('/:id', async (req, res, next) => {
-  try {
-    let updatedStudentInfo = await Student.update(req.body, {
-      where: { id: req.params.id },
-      returning: true,
-      plain: true,
-    });
-    res.send(updatedStudentInfo[1]);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await Student.destroy({ where: { id: req.params.id } });
-    res.status(204).send();
-  } catch (err) {
-    next(err);
-  }
-});
-
-module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-const router = require('express').Router();
-const Student = require('../db/models/student')
-
 
 /*
 
@@ -86,6 +13,11 @@ post, put
     - req.body
 
 */
+
+
+const router = require('express').Router();
+const Student = require('../db/models/student');
+
 
 
 // https://sequelizedocs.fullstackacademy.com/querying/
@@ -106,13 +38,13 @@ router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const findOneStudent = await Student.findById(id);
-    if (!findOneStudent) {
-      res.status(404).json();                             // The status that the client gets
+    if (findOneStudent) {
+      res.status(200).json(findOneStudent);                     // The status that the client gets
     } else {
-      res.status(200).json(findOneStudent);               // The status that the client gets
+      res.status(404).json('Student not found');                // The status that the client gets
     }
   } catch (err) {
-    console.log(err);                                     // The status that the developer gets
+    console.log(err);                                           // The status that the developer gets
     next(err)
   }
 })
@@ -148,6 +80,20 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     let updatedStudentInfo = await Student.update(req.body, {
+//       where: { id: req.params.id },
+//       returning: true,
+//       plain: true,
+//     });
+//     res.send(updatedStudentInfo[1]);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+
 
 
 // https://sequelizedocs.fullstackacademy.com/querying/
@@ -157,11 +103,20 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const findOneStudent = await Student.findById(id);
     const deletedStudent = await findOneStudent.destroy()
-    res.status(204).json(deletedStudent);
+    res.status(204).json();
   } catch (err) {
     console.log(err);
     next(err);
   }
 })
+
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     await Student.destroy({ where: { id: req.params.id } });
+//     res.status(204).send();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 module.exports = router;
